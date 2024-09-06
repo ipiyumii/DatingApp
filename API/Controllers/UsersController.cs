@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using API.Data;
 using API.DTOs;
 using API.Entities;
@@ -32,4 +33,24 @@ public class UsersController(IUserRepository userRepository, IMapper mapper) : B
 
         return mapper.Map<MemberDto>(user);
     }
-}
+
+    [HttpPut]
+    public async Task<ActionResult> UpdateUser(MemberUpdateDto memberUpdateDto) 
+    {
+        var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if(username == null) return BadRequest("No username found in token");
+
+        var user = await userRepository.GetuserByUsernameAsync(username);
+
+        if(user == null) return BadRequest("could not find user");
+
+        mapper.Map(memberUpdateDto,user);
+
+        // userRepository.Update(user);
+
+        if(await userRepository.SaveAllAsync()) return NoContent();
+
+        return BadRequest("fail to update the user");
+    }
+} 

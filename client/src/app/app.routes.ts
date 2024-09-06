@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import { Routes, CanDeactivateFn } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { MemberListComponent } from './members/member-list/member-list.component';
 import { MemberDetailsComponent } from './members/member-details/member-details.component';
@@ -8,6 +8,8 @@ import { authGuard } from './_guard/auth.guard';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
+import { MemberEditComponent } from './members/member-edit/member-edit.component';
+import { preventUnsavedChangesGuard } from './_guard/prevent-unsaved-changes.guard';
 
 export const routes: Routes = [
   {path: '',component: HomeComponent},
@@ -17,7 +19,10 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
       {path: 'members',component: MemberListComponent},
-      {path: 'members/:id',component: MemberDetailsComponent},
+      {path: 'members/:username',component: MemberDetailsComponent},
+      {path: 'member/edit',component: MemberEditComponent,
+        canDeactivate:[preventUnsavedChangesGuard]
+      },
       {path: 'lists',component: ListsComponent},
       {path: 'messages',component: MessagesComponent}
     ]
