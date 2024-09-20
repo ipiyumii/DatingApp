@@ -12,46 +12,48 @@
     </label>
   </div>
 
+<!-- [formControl] -  Binds the input field to the form control named knownAs in the registerForm -->
 <app-text-input
-  [formControl] = "$any(registerForm.controls['username'])"
+  [formControl]="$any(registerForm.controls['username'])"
   [label]="'Username'"
 >
 </app-text-input>
 
 <app-text-input
-  [formControl] = "$any(registerForm.controls['knownAs'])"
+  [formControl]="$any(registerForm.controls['knownAs'])"
   [label]="'Known As'"
 >
 </app-text-input>
 
+
 <app-date-picker
-  [formControl] = "$any(registerForm.controls['dateOfBirth'])"
+  [formControl]="$any(registerForm.controls['dateOfBirth'])"
   [label]="'Date Of Birth'"
   [maxDate]="maxDate"
 >
 </app-date-picker>
 
 <app-text-input
-  [formControl] = "$any(registerForm.controls['city'])"
+  [formControl]="$any(registerForm.controls['city'])"
   [label]="'City'"
 >
 </app-text-input>
 
 <app-text-input
-  [formControl] = "$any(registerForm.controls['country'])"
+  [formControl]="$any(registerForm.controls['country'])"
   [label]="'Country'"
 >
 </app-text-input>
 
 <app-text-input
-  [formControl] = "$any(registerForm.controls['password'])"
+  [formControl]="$any(registerForm.controls['password'])"
   [label]="'password'"
   [type]="'password'"
 >
 </app-text-input>
 
 <app-text-input
-  [formControl] = "$any(registerForm.controls['confirmPassword'])"
+  [formControl]="$any(registerForm.controls['confirmPassword'])"
   [label]="'confirm Password'"
   [type]="'password'"
 >
