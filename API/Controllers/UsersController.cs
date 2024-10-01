@@ -2,6 +2,7 @@ using System.Security.Claims;
 using API.DTOs;
 using API.Entities;
 using API.Extensions;
+using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -16,11 +17,10 @@ public class UsersController(IUserRepository userRepository, IMapper mapper, IPh
 
     //create api endpoints
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers() 
+    public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers(UserParams userParams) 
     {
-        var users = await userRepository.GetUsersAsync();
-        var usersToReturn = mapper.Map<IEnumerable<MemberDto>>(users);
-        return Ok(usersToReturn);
+        var users = await userRepository.GetMemberAsync(userParams);
+        return Ok(users);
     }
 
     [HttpGet("{username}")]
