@@ -1,3 +1,4 @@
+import { FormsModule, NgForm } from '@angular/forms';
 import { Member } from './../../_models/member';
 import { MembersService } from './../../_services/members.service';
 import { Component, inject, OnInit } from '@angular/core';
@@ -9,7 +10,7 @@ import { UserParams } from '../../_models/userParams';
 @Component({
   selector: 'app-member-list',
   standalone: true,
-  imports: [MemberCardComponent, PaginationModule],
+  imports: [MemberCardComponent, PaginationModule, FormsModule],
   templateUrl: './member-list.component.html',
   styleUrl: './member-list.component.css'
 })
@@ -17,6 +18,7 @@ export class MemberListComponent implements OnInit {
   memberService = inject(MembersService);
   private accountService = inject(AccountService);
   userParams = new UserParams(this.accountService.currentUser());
+  genderList = [{value: 'male', display: 'Male'}, {value: 'female', display: 'Female'}];
 
   ngOnInit(): void {
     if(!this.memberService.paginatedResult()) this.loadMembers();
@@ -25,6 +27,11 @@ export class MemberListComponent implements OnInit {
   loadMembers() {
      this.memberService.getMembers(this.userParams);
     }
+
+  resetFilters() {
+    this.userParams = new UserParams(this.accountService.currentUser());
+    this.loadMembers();
+  }
 
   pageChanged(event: any) {
     if(this.userParams.pageNumber !== event.page) {
